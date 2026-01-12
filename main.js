@@ -33,9 +33,11 @@ class Player {
     }
 
     rollAttributes() {
-        for (const key in this.attributes) {
-            this.attributes[key] = sumArrayElements(lenient3d6()); // Sum values and assign
-        }
+        // Array with inner listed key-val pairs, for example [["strength", 10], ["dexerity", 11], ...]
+        let attributeArrays = Object.keys(this.attributes).map((key) => [key, sumArrayElements(lenient3d6())]);
+        // Object.fromEntries from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
+        // Converts listed key-val pairs into map object
+        this.attributes = Object.fromEntries(attributeArrays);
     }
 
     printPlayer() {
