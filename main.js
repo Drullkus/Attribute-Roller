@@ -20,7 +20,7 @@ class Player {
         for (const key in this.attributes) {
             let results = diceRoller(4, 6);
 
-            results.sort(binaryDiff) // Sorts values in ascending order
+            results.sort(binaryDiff); // Sorts values in ascending order
             results.shift(); // Remove first entry; lowest roll dropped
 
             this.attributes[key] = sumArrayElements(results); // Sum values and assign
@@ -53,7 +53,7 @@ function diceRoller(times, sides) {
     let results = [];
 
     for (let i = 0; i < times; i++) {
-        results.push(Math.floor(Math.random() * sides + 1))
+        results.push(Math.floor(Math.random() * sides + 1));
     }
     
     return results;
