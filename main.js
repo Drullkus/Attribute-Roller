@@ -2,6 +2,7 @@ const defaultAttributeScores = [15, 14, 13, 12, 10, 8];
 
 const binarySum = (a, b) => a + b;
 const binaryDiff = (a, b) => a - b;
+const attributeEntryFormatter = ([key, value]) => `${key.slice(0, 3).toUpperCase()}: ${value}`;
 
 class Player {
     constructor(characterName = "Naruto") {
@@ -29,9 +30,9 @@ class Player {
 
     printPlayer() {
         console.log(`NAME: ${this.name}`);
-        for (const [key, value] of Object.entries(this.attributes)) {
-            console.log(`${key.slice(0, 3).toUpperCase()}: ${value}`);
-        }
+        Object.entries(this.attributes)
+            .map(formatAttributeEntry)
+            .forEach((line) => console.log(line)); // Cannot directly pass console.log, must discard second and third lambda args
     }
 }
 
@@ -60,7 +61,7 @@ function diceRoller(times, sides) {
 }
 
 function sumArrayElements(array) {
-    return array.reduce((a, b) => a + b);
+    return array.reduce(binarySum);
 }
 
 const player01 = new Player();
