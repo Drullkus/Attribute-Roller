@@ -5,6 +5,13 @@ const binaryDiff = (a, b) => a - b;
 const attributeEntryFormatter = ([key, value]) => `${key.slice(0, 3).toUpperCase()}: ${value}`;
 // Create 0..(N-1) arrays using .from({length}, map) https://stackoverflow.com/a/33352604
 const diceRoller = (times, sides) => Array.from({length: times}, () => Math.floor(Math.random() * sides + 1));
+const sumArrayElements = (array) => array.reduce(binarySum);
+
+function lenient4d6() {
+    return diceRoller(4, 6)
+        .sort(binaryDiff) // Sorts values in ascending order
+        .filter((_value, index) => index != 0); // Remove first entry; lowest roll dropped
+}
 
 class Player {
     constructor(characterName = "Naruto") {
@@ -21,12 +28,7 @@ class Player {
 
     rollAttributes() {
         for (const key in this.attributes) {
-            let results = diceRoller(4, 6);
-
-            results.sort(binaryDiff); // Sorts values in ascending order
-            results.shift(); // Remove first entry; lowest roll dropped
-
-            this.attributes[key] = sumArrayElements(results); // Sum values and assign
+            this.attributes[key] = sumArrayElements(lenient4d6()); // Sum values and assign
         }
     }
 
@@ -52,12 +54,7 @@ function shuffleArray(targetArray) {
     return shuffled;
 }
 
-function sumArrayElements(array) {
-    return array.reduce(binarySum);
-}
-
 const player01 = new Player();
-player01.rollAttributes();
 player01.printPlayer();
 
 const player02 = new Player('Son Goku');
