@@ -1,5 +1,5 @@
 const defaultAttributeScores = [15, 14, 13, 12, 10, 8];
-const attributeNames = [ "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma" ]
+const attributeNames = [ "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma" ];
 
 const binarySum = (a, b) => a + b;
 const binaryDiff = (a, b) => a - b;
@@ -20,13 +20,15 @@ class Player {
         this.name = characterName;
 
         const shuffledScores = shuffleArray(defaultAttributeScores);
+        // Array with inner listed key-val pairs, for example [["strength", 10], ["dexerity", 11], ...]
+        const attributeArrays = attributeNames.map((name, index) => [name, shuffledScores[index]]);
         // Object.fromEntries from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
         // Converts listed key-val pairs into map object
-        this.attributes = Object.fromEntries(attributeNames.map((name, index) => [name, shuffledScores[index]]));
+        this.attributes = Object.fromEntries(attributeArrays);
     }
 
     rollAttributes() {
-        // Array with inner listed key-val pairs, for example [["strength", 10], ["dexerity", 11], ...]
+        // Similar as to last two lines of code in constructor, but with new rolls
         const attributeArrays = attributeNames.map((name) => [name, sumArrayElements(lenient3d6())]);
         this.attributes = Object.fromEntries(attributeArrays);
     }
