@@ -1,4 +1,5 @@
 const defaultAttributeScores = [15, 14, 13, 12, 10, 8];
+const attributeNames = [ "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma" ]
 
 const binarySum = (a, b) => a + b;
 const binaryDiff = (a, b) => a - b;
@@ -17,24 +18,14 @@ function lenient3d6() {
 class Player {
     constructor(characterName = "Naruto") {
         this.name = characterName;
-        this.attributes = {
-            strength: 0,
-            dexterity: 0,
-            constitution: 0,
-            intelligence: 0,
-            wisdom: 0,
-            charisma: 0
-        };
-        let shuffledResult = shuffleArray(defaultAttributeScores);
-        for (const [key, value] of Object.entries(this.attributes)) {
-            let attributeValue = shuffledResult.pop();
-            this.attributes[key] = attributeValue;
-        }
+
+        const shuffledScores = shuffleArray(defaultAttributeScores);
+        this.attributes = Object.fromEntries(attributeNames.map((name, index) => [name, shuffledScores[index]]));
     }
 
     rollAttributes() {
         // Array with inner listed key-val pairs, for example [["strength", 10], ["dexerity", 11], ...]
-        let attributeArrays = Object.keys(this.attributes).map((key) => [key, sumArrayElements(lenient3d6())]);
+        let attributeArrays = attributeNames.map((name) => [name, sumArrayElements(lenient3d6())]);
         // Object.fromEntries from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
         // Converts listed key-val pairs into map object
         this.attributes = Object.fromEntries(attributeArrays);
@@ -62,6 +53,7 @@ function shuffleArray(targetArray) {
 }
 
 const player01 = new Player();
+// Attributes are shuffle-copied from defaults
 player01.printPlayer();
 
 const player02 = new Player('Son Goku');
