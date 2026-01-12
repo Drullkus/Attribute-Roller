@@ -8,8 +8,8 @@ const attributeEntryFormatter = ([key, value]) => `${key.slice(0, 3).toUpperCase
 const diceRoller = (times, sides) => Array.from({length: times}, () => Math.floor(Math.random() * sides + 1));
 const sumArrayElements = (array) => array.reduce(binarySum);
 
+// Returns an array of dice rolls, best three out of four
 function lenient3d6() {
-    // Returns an array of dice rolls, best three out of four
     return diceRoller(4, 6)
         .sort(binaryDiff) // Sorts values in ascending order
         .slice(1); // Remove first entry; lowest roll dropped
@@ -20,14 +20,14 @@ class Player {
         this.name = characterName;
 
         const shuffledScores = shuffleArray(defaultAttributeScores);
+        // Object.fromEntries from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
+        // Converts listed key-val pairs into map object
         this.attributes = Object.fromEntries(attributeNames.map((name, index) => [name, shuffledScores[index]]));
     }
 
     rollAttributes() {
         // Array with inner listed key-val pairs, for example [["strength", 10], ["dexerity", 11], ...]
-        let attributeArrays = attributeNames.map((name) => [name, sumArrayElements(lenient3d6())]);
-        // Object.fromEntries from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
-        // Converts listed key-val pairs into map object
+        const attributeArrays = attributeNames.map((name) => [name, sumArrayElements(lenient3d6())]);
         this.attributes = Object.fromEntries(attributeArrays);
     }
 
@@ -43,7 +43,7 @@ class Player {
 // from: https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
 // adapted to JS and reconfigured to return a new (non-mutated) array
 function shuffleArray(targetArray) {
-    let shuffled = Array.from(targetArray); // Clones the input array
+    const shuffled = Array.from(targetArray); // Clones the input array
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         // Assign two values at once as structure+destructure assignment https://stackoverflow.com/a/12646864
