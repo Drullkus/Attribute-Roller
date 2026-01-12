@@ -7,7 +7,8 @@ const attributeEntryFormatter = ([key, value]) => `${key.slice(0, 3).toUpperCase
 const diceRoller = (times, sides) => Array.from({length: times}, () => Math.floor(Math.random() * sides + 1));
 const sumArrayElements = (array) => array.reduce(binarySum);
 
-function lenient4d6() {
+function lenient3d6() {
+    // Returns an array of dice rolls, best three out of four
     return diceRoller(4, 6)
         .sort(binaryDiff) // Sorts values in ascending order
         .filter((_value, index) => index != 0); // Remove first entry; lowest roll dropped
@@ -33,7 +34,7 @@ class Player {
 
     rollAttributes() {
         for (const key in this.attributes) {
-            this.attributes[key] = sumArrayElements(lenient4d6()); // Sum values and assign
+            this.attributes[key] = sumArrayElements(lenient3d6()); // Sum values and assign
         }
     }
 
