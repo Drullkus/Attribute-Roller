@@ -11,7 +11,7 @@ function lenient3d6() {
     // Returns an array of dice rolls, best three out of four
     return diceRoller(4, 6)
         .sort(binaryDiff) // Sorts values in ascending order
-        .filter((_value, index) => index != 0); // Remove first entry; lowest roll dropped
+        .slice(1); // Remove first entry; lowest roll dropped
 }
 
 class Player {
