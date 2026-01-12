@@ -55,9 +55,8 @@ function shuffleArray(targetArray) {
     let shuffled = Array.from(targetArray); // Clones the input array
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        const temp = shuffled[i];
-        shuffled[i] = shuffled[j];
-        shuffled[j] = temp;
+        // Assign two values at once as structure+destructure assignment https://stackoverflow.com/a/12646864
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
     return shuffled;
 }
