@@ -3,6 +3,8 @@ const defaultAttributeScores = [15, 14, 13, 12, 10, 8];
 const binarySum = (a, b) => a + b;
 const binaryDiff = (a, b) => a - b;
 const attributeEntryFormatter = ([key, value]) => `${key.slice(0, 3).toUpperCase()}: ${value}`;
+// Create 0..(N-1) arrays using .from({length}, map) https://stackoverflow.com/a/33352604
+const diceRoller = (times, sides) => Array.from({length: times}, () => Math.floor(Math.random() * sides + 1));
 
 class Player {
     constructor(characterName = "Naruto") {
@@ -48,16 +50,6 @@ function shuffleArray(targetArray) {
         shuffled[j] = temp;
     }
     return shuffled;
-}
-
-function diceRoller(times, sides) {
-    let results = [];
-
-    for (let i = 0; i < times; i++) {
-        results.push(Math.floor(Math.random() * sides + 1));
-    }
-    
-    return results;
 }
 
 function sumArrayElements(array) {
