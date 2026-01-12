@@ -31,7 +31,7 @@ class Player {
     printPlayer() {
         console.log(`NAME: ${this.name}`);
         Object.entries(this.attributes)
-            .map(formatAttributeEntry)
+            .map(attributeEntryFormatter)
             .forEach((line) => console.log(line)); // Cannot directly pass console.log, must discard second and third lambda args
     }
 }
